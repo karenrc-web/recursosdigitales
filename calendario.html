@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Puerto Rico Training Schedule</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;700&family=Barlow+Condensed:wght@600;700&display=swap');
+
+:root{
+  --navy:#0f1f38;
+  --navy-deep:#0a1526;
+  --navy-line: rgba(255,255,255,0.08);
+  --gold:#c9a24b;
+  --gold-soft:#e9d6a3;
+  --paper:#f7f5f0;
+  --card:#ffffff;
+  --ink:#16223a;
+  --ink-soft:#5a6478;
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'DM Sans', sans-serif;
+}
+
+.wrap{max-width:960px;margin:0 auto;padding:0 0 80px;}
+
+/* HERO */
+.hero{
+  background:linear-gradient(160deg,var(--navy) 0%, var(--navy-deep) 100%);
+  color:#fff;
+  padding:64px 48px 56px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::after{
+  content:"";
+  position:absolute; right:-80px; top:-80px;
+  width:280px;height:280px;border-radius:50%;
+  border:1px solid rgba(201,162,75,0.25);
+}
+.hero::before{
+  content:"";
+  position:absolute; right:-30px; top:20px;
+  width:200px;height:200px;border-radius:50%;
+  border:1px solid rgba(201,162,75,0.18);
+}
+.hero-loc{
+  font-family:'Barlow Condensed', sans-serif;
+  font-weight:600;
+  letter-spacing:0.14em;
+  color:var(--gold-soft);
+  font-size:15px;
+  margin-bottom:10px;
+}
+.hero h1{
+  font-family:'Cormorant Garamond', serif;
+  font-weight:700;
+  font-size:56px;
+  line-height:1.02;
+  margin:0 0 14px;
+}
+.hero .sub{
+  font-size:17px;
+  color:rgba(255,255,255,0.72);
+  max-width:520px;
+  line-height:1.5;
+}
+.hero .month{
+  margin-top:26px;
+  display:inline-block;
+  font-family:'Barlow Condensed', sans-serif;
+  font-weight:700;
+  letter-spacing:0.08em;
+  font-size:14px;
+  padding:8px 18px;
+  border:1px solid var(--gold);
+  color:var(--gold-soft);
+}
+
+/* LEGEND */
+.legend{
+  display:flex;
+  gap:28px;
+  padding:20px 48px;
+  background:var(--navy-deep);
+  color:rgba(255,255,255,0.55);
+  font-size:13px;
+  font-family:'Barlow Condensed', sans-serif;
+  letter-spacing:0.05em;
+  flex-wrap:wrap;
+}
+.legend b{color:var(--gold-soft);font-weight:700;}
+
+/* CATEGORY */
+.category{
+  margin:46px 48px 0;
+}
+.category-head{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  margin-bottom:20px;
+  border-bottom:2px solid var(--navy);
+  padding-bottom:10px;
+}
+.category-head h2{
+  font-family:'Cormorant Garamond', serif;
+  font-weight:700;
+  font-size:28px;
+  color:var(--navy);
+  margin:0;
+}
+.category-head span{
+  font-family:'Barlow Condensed', sans-serif;
+  color:var(--gold);
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:0.08em;
+}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:26px;}
+.timeline::before{
+  content:"";
+  position:absolute;left:5px;top:6px;bottom:6px;
+  width:2px;background:var(--navy-line);
+  background:linear-gradient(var(--gold), var(--navy-line) 90%);
+  opacity:0.35;
+}
+
+.day-group{position:relative;margin-bottom:34px;}
+.day-group::before{
+  content:"";
+  position:absolute;left:-26px;top:8px;
+  width:11px;height:11px;border-radius:50%;
+  background:var(--gold);
+  border:3px solid var(--paper);
+  box-shadow:0 0 0 1px var(--gold);
+}
+.date-label{
+  font-family:'Barlow Condensed', sans-serif;
+  font-weight:700;
+  font-size:15px;
+  letter-spacing:0.06em;
+  color:var(--navy);
+  margin-bottom:12px;
+}
+.date-label .n{color:var(--gold);}
+
+.cards{display:flex;flex-direction:column;gap:14px;}
+
+.card{
+  background:var(--card);
+  border:1px solid rgba(15,31,56,0.08);
+  border-left:4px solid var(--navy);
+  padding:18px 22px;
+  border-radius:2px;
+}
+.card.trainer-Andrea{border-left-color:#c9a24b;}
+.card.trainer-Juanita{border-left-color:#7a8ba8;}
+.card.trainer-Diego{border-left-color:#8a6d3b;}
+.card.trainer-Brenda{border-left-color:#3d5a80;}
+.card.trainer-Joham{border-left-color:#556b2f;}
+
+.card-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:16px;
+  margin-bottom:10px;
+  flex-wrap:wrap;
+}
+.card-title{
+  font-family:'Cormorant Garamond', serif;
+  font-weight:600;
+  font-size:21px;
+  color:var(--ink);
+}
+.meta-row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.pill{
+  font-family:'Barlow Condensed', sans-serif;
+  font-weight:700;
+  font-size:12.5px;
+  letter-spacing:0.03em;
+  padding:5px 11px;
+  border-radius:20px;
+  white-space:nowrap;
+}
+.pill.horario{background:var(--navy);color:#fff;}
+.pill.duracion{background:#eee6d3;color:#7a5c1f;}
+.pill.trainer{background:transparent;border:1px solid var(--navy);color:var(--navy);}
+
+.tema{
+  font-size:14px;
+  color:var(--ink-soft);
+  line-height:1.55;
+}
+.tema b{color:var(--ink);font-weight:700;}
+.sub-items{
+  margin:8px 0 0;
+  padding-left:18px;
+  font-size:13.5px;
+  color:var(--ink-soft);
+  line-height:1.6;
+}
+.sub-items li{margin-bottom:2px;}
+
+.aplicacion{
+  margin-top:10px;
+  font-size:13px;
+  font-family:'Barlow Condensed', sans-serif;
+  letter-spacing:0.03em;
+  font-weight:600;
+  color:var(--gold);
+  border-top:1px dashed rgba(15,31,56,0.15);
+  padding-top:8px;
+}
+
+/* FOOTER */
+.footer{
+  margin:60px 48px 0;
+  padding-top:24px;
+  border-top:1px solid rgba(15,31,56,0.12);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.footer .duration-total{
+  font-family:'Cormorant Garamond', serif;
+  font-size:22px;
+  font-weight:700;
+  color:var(--navy);
+}
+.footer .duration-total span{color:var(--gold);}
+.footer .note{
+  font-family:'Barlow Condensed', sans-serif;
+  font-size:12.5px;
+  letter-spacing:0.04em;
+  color:var(--ink-soft);
+}
+
+/* VIEW TOGGLE */
+.view-toggle{
+  display:flex;
+  gap:10px;
+  margin:28px 48px 0;
+}
+.toggle-btn{
+  font-family:'Barlow Condensed', sans-serif;
+  font-weight:700;
+  letter-spacing:0.05em;
+  font-size:13.5px;
+  padding:9px 20px;
+  border:1px solid var(--navy);
+  background:transparent;
+  color:var(--navy);
+  border-radius:20px;
+  cursor:pointer;
+  transition:background 0.15s ease, color 0.15s ease;
+}
+.toggle-btn:hover{background:rgba(15,31,56,0.06);}
+.toggle-btn.active{background:var(--navy);color:#fff;}
+
+/* CALENDAR VIEW */
+.cal-month-block{margin:40px 48px 0;}
+.cal-month-title{
+  font-family:'Cormorant Garamond', serif;
+  font-weight:700;
+  font-size:26px;
+  color:var(--navy);
+  margin-bottom:16px;
+  border-bottom:2px solid var(--navy);
+  padding-bottom:8px;
+}
+.cal-grid{
+  display:grid;
+  grid-template-columns:repeat(7, 1fr);
+  gap:6px;
+}
+.cal-head{
+  font-family:'Barlow Condensed', sans-serif;
+  font-weight:700;
+  font-size:12px;
+  letter-spacing:0.06em;
+  color:var(--ink-soft);
+  text-align:center;
+  padding-bottom:4px;
+}
+.cal-day{
+  min-height:88px;
+  background:var(--card);
+  border:1px solid rgba(15,31,56,0.08);
+  border-radius:4px;
+  padding:6px;
+}
+.cal-day.empty{background:transparent;border:none;}
+.cal-daynum{
+  font-family:'Barlow Condensed', sans-serif;
+  font-weight:700;
+  font-size:13px;
+  color:var(--navy);
+  margin-bottom:4px;
+}
+.cal-event{
+  font-size:10.5px;
+  line-height:1.3;
+  padding:3px 6px;
+  border-radius:3px;
+  margin-bottom:3px;
+  background:var(--paper);
+  border-left:3px solid var(--navy);
+  color:var(--ink);
+}
+.cal-event.trainer-Andrea{border-left-color:#c9a24b;}
+.cal-event.trainer-Juanita{border-left-color:#7a8ba8;}
+.cal-event.trainer-Diego{border-left-color:#8a6d3b;}
+.cal-event.trainer-Brenda{border-left-color:#3d5a80;}
+.cal-event.trainer-Joham{border-left-color:#556b2f;}
+
+@media(max-width:640px){
+  .view-toggle{margin:22px 22px 0;flex-wrap:wrap;}
+  .cal-month-block{margin:32px 22px 0;}
+  .cal-day{min-height:70px;padding:4px;}
+  .cal-event{font-size:9.5px;}
+  .hero{padding:44px 22px 40px;}
+  .hero h1{font-size:38px;}
+  .legend{padding:16px 22px;}
+  .category{margin:36px 22px 0;}
+  .footer{margin:44px 22px 0;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-loc">TMLF ACADEMY — TRAINING DEPARTMENT</div>
+    <h1>Puerto Rico<br>Training Schedule</h1>
+    <div class="sub">Cronograma oficial de capacitación para el equipo de Puerto Rico. Detalle día a día de sesiones, temario, horarios y trainer responsable.</div>
+    <div class="month">SEPT – OCT 2026</div>
+  </div>
+
+  <div class="legend">
+    <div><b>9 sept – 7 oct</b> rango del cronograma</div>
+    <div><b>16 días</b> duración total estimada</div>
+    <div><b>5</b> trainers asignados</div>
+  </div>
+
+  <div class="view-toggle">
+    <button class="toggle-btn active" id="btnTimeline" onclick="showView('timeline')">Vista Línea de Tiempo</button>
+    <button class="toggle-btn" id="btnCalendar" onclick="showView('calendar')">Vista Calendario</button>
+  </div>
+
+  <div id="timelineView">
+
+  <!-- INTRODUCTION & CASE WORKFLOW -->
+  <div class="category">
+    <div class="category-head"><h2>Introduction &amp; Case Workflow</h2><span>01</span></div>
+    <div class="timeline">
+      <div class="day-group">
+        <div class="date-label">9-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Andrea">
+            <div class="card-top">
+              <div class="card-title">Introduction</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 8-4 · PR 10-6</span>
+                <span class="pill duracion">1/2 día</span>
+                <span class="pill trainer">Andrea</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> End to end</div>
+            <div class="aplicacion">Atención al cliente — Mendoza Way - Atención al cl</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ELEGIBILIDAD Y ADMISIBILIDADES -->
+  <div class="category">
+    <div class="category-head"><h2>Elegibilidad y admisibilidades</h2><span>02</span></div>
+    <div class="timeline">
+      <div class="day-group">
+        <div class="date-label">10-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Juanita">
+            <div class="card-top">
+              <div class="card-title">Inadmisibildades y elegibilidad</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 8-4 · PR 10-6</span>
+                <span class="pill duracion">1/2 día</span>
+                <span class="pill trainer">Juanita</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> Teoría</div>
+          </div>
+        </div>
+      </div>
+      <div class="day-group">
+        <div class="date-label">11-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Juanita">
+            <div class="card-top">
+              <div class="card-title">Elegibilidad</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 8-12 · PR 10-2</span>
+                <span class="pill trainer">Juanita</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> Análisis de casos</div>
+            <div class="aplicacion">Aplicación en las llamadas — Aplicación en llamadas — Juanita</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VAWA -->
+  <div class="category">
+    <div class="category-head"><h2>VAWA</h2><span>03</span></div>
+    <div class="timeline">
+      <div class="day-group">
+        <div class="date-label">11-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Andrea">
+            <div class="card-top">
+              <div class="card-title">VAWA (Violence Against Women Act)</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 1-4 · PR 2-6</span>
+                <span class="pill duracion">1 DÍA</span>
+                <span class="pill trainer">Andrea</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> VAWA Policy Manual review - Elegibilidad VAWA</div>
+            <ul class="sub-items">
+              <li>Introduction to the VAWA Bible — Andrea</li>
+              <li>Key provisions and qualifying relationships — Andrea</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="day-group">
+        <div class="date-label">14-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Andrea">
+            <div class="card-top">
+              <div class="card-title">VAWA Abuse Interviews</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 8-4 · PR 10-6</span>
+                <span class="pill duracion">1/2 DÍA</span>
+                <span class="pill trainer">Andrea</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> Shadow VAWA abuse interview - Evidencias</div>
+            <ul class="sub-items">
+              <li>Understanding the role of mental health evidence in VAWA cases — Andrea</li>
+              <li>Learning to coordinate with expert witnesses — Andrea</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="day-group">
+        <div class="date-label">15-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Diego">
+            <div class="card-top">
+              <div class="card-title">VAWA Dcl</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 8-12 · PR 10-2</span>
+                <span class="pill duracion">1/2 DÍA</span>
+                <span class="pill trainer">Diego</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> Review sample VAWA declarations</div>
+            <ul class="sub-items">
+              <li>Best practices for drafting declarations</li>
+              <li>Common pitfalls and how to avoid them</li>
+            </ul>
+            <div class="aplicacion">Aplicación en las llamadas — Aplicación en llamadas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- T VISAS -->
+  <div class="category">
+    <div class="category-head"><h2>T Visas</h2><span>04</span></div>
+    <div class="timeline">
+      <div class="day-group">
+        <div class="date-label">15-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Diego">
+            <div class="card-top">
+              <div class="card-title">T Visa Fundamentals</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 1-4 · PR 2-6</span>
+                <span class="pill duracion">1/2 DÍA</span>
+                <span class="pill trainer">Diego</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> T Visa Policy Manual review</div>
+            <ul class="sub-items">
+              <li>Marco Legal y Operativo Básico de la Visa T — Diego</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="day-group">
+        <div class="date-label">17-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Diego">
+            <div class="card-top">
+              <div class="card-title">T Visa Bible study: TVPA</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 8-12 · PR 10-2</span>
+                <span class="pill duracion">1/2 DÍA</span>
+                <span class="pill trainer">Diego</span>
+              </div>
+            </div>
+            <ul class="sub-items">
+              <li>Trafficking victim protections and requirements (EMP) — Diego</li>
+            </ul>
+          </div>
+          <div class="card trainer-Brenda">
+            <div class="card-top">
+              <div class="card-title">T Visa Psychological Evaluations</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 1-4 · PR 2-6</span>
+                <span class="pill duracion">1 Día</span>
+                <span class="pill trainer">Brenda</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> Trauma-informed interviews techniques</div>
+          </div>
+        </div>
+      </div>
+      <div class="day-group">
+        <div class="date-label">18-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Diego">
+            <div class="card-top">
+              <div class="card-title">Visa T Dcl</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 8-12 · PR 10-2</span>
+                <span class="pill trainer">Diego</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> Revisión de dcl y criterios</div>
+            <div class="aplicacion">Aplicación en las llamadas — Aplicación en llamadas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOIA -->
+  <div class="category">
+    <div class="category-head"><h2>FOIA</h2><span>05</span></div>
+    <div class="timeline">
+      <div class="day-group">
+        <div class="date-label">18-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Juanita">
+            <div class="card-top">
+              <div class="card-title">FOIA</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 1-4 · PR 2-6</span>
+                <span class="pill duracion">1/2 DÍA</span>
+                <span class="pill trainer">Juanita</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> Revisión y análisis.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CRIMINAL ISSUES -->
+  <div class="category">
+    <div class="category-head"><h2>Criminal Issues</h2><span>06</span></div>
+    <div class="timeline">
+      <div class="day-group">
+        <div class="date-label">21-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Juanita">
+            <div class="card-top">
+              <div class="card-title">Criminal Grounds of Inadmissibility</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 8-4 · PR 10-6</span>
+                <span class="pill duracion">1/2 DÍA</span>
+                <span class="pill trainer">Juanita</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> Crimes involving moral turpitude (CIMT)</div>
+            <ul class="sub-items">
+              <li>Case law and statutory analysis — Juanita</li>
+              <li>Defenses and waivers — Juanita</li>
+            </ul>
+            <div class="aplicacion">Aplicación en las llamadas — Aplicación en llamadas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERMANENT BAR -->
+  <div class="category">
+    <div class="category-head"><h2>Permanent Bar</h2><span>07</span></div>
+    <div class="timeline">
+      <div class="day-group">
+        <div class="date-label">22-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Juanita">
+            <div class="card-top">
+              <div class="card-title">Permanent Bar Application</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 8-4 · PR 10-6</span>
+                <span class="pill duracion">1/2 DÍA</span>
+                <span class="pill trainer">Juanita</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> Practice exercises: Permanent bar hypotheticals</div>
+            <ul class="sub-items">
+              <li>Case analysis and problem-solving scenarios — Juanita</li>
+            </ul>
+            <div class="aplicacion">Aplicación en las llamadas — Aplicación en llamadas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AOS -->
+  <div class="category">
+    <div class="category-head"><h2>AOS</h2><span>08</span></div>
+    <div class="timeline">
+      <div class="day-group">
+        <div class="date-label">23-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Juanita">
+            <div class="card-top">
+              <div class="card-title">Adjustment of Status</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 8-12 · PR 10-2</span>
+                <span class="pill duracion">1/2 DÍA</span>
+                <span class="pill trainer">Juanita</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> Section 245(a) adjustment provisions</div>
+            <ul class="sub-items">
+              <li>Section 245(i) grandfathering provisions — Juanita</li>
+              <li>Eligibility requirements and documentary evidence — Juanita</li>
+            </ul>
+            <div class="aplicacion">Aplicación en las llamadas</div>
+          </div>
+
+          <!-- RFE same day -->
+          <div class="card trainer-Joham">
+            <div class="card-top">
+              <div class="card-title">Complex Case Management RFE</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 1-4 · PR 2-6</span>
+                <span class="pill duracion">1/2 DÍA</span>
+                <span class="pill trainer">Joham</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> Review challenging Requests for Evidence (RFEs) with approved outcomes</div>
+            <ul class="sub-items">
+              <li>Strategy development for difficult cases — Joham</li>
+              <li>Learning from successful case resolutions — Joham</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RFE (category label per brief, session already shown above on 23-sept) -->
+  <div class="category">
+    <div class="category-head"><h2>RFE</h2><span>09</span></div>
+    <div class="timeline">
+      <div class="day-group">
+        <div class="date-label">23-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Joham">
+            <div class="card-top">
+              <div class="card-title">Complex Case Management RFE</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 1-4 · PR 2-6</span>
+                <span class="pill duracion">1/2 DÍA</span>
+                <span class="pill trainer">Joham</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> Review challenging Requests for Evidence (RFEs) with approved outcomes</div>
+            <ul class="sub-items">
+              <li>Strategy development for difficult cases — Joham</li>
+              <li>Learning from successful case resolutions — Joham</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LSU & CR -->
+  <div class="category">
+    <div class="category-head"><h2>LSU &amp; CR</h2><span>10</span></div>
+    <div class="timeline">
+      <div class="day-group">
+        <div class="date-label">24-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Joham">
+            <div class="card-top">
+              <div class="card-title">LSU</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 8-4 · PR 10-6</span>
+                <span class="pill duracion">1/2 DÍA</span>
+                <span class="pill trainer">Joham</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> Análisis de caso</div>
+            <ul class="sub-items">
+              <li>Process Overview — Joham</li>
+              <li>Responsibilities, Checklists, and Tools — Joham</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="day-group">
+        <div class="date-label">25-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Andrea">
+            <div class="card-top">
+              <div class="card-title">Pre case review</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 8-12 · PR 10-2</span>
+                <span class="pill duracion">1/2 DÍA</span>
+                <span class="pill trainer">Andrea</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> Strategies and Best Practices</div>
+            <ul class="sub-items">
+              <li>Practice and Use of Simulators — Andrea</li>
+            </ul>
+          </div>
+
+          <div class="card trainer-Joham">
+            <div class="card-top">
+              <div class="card-title">Rescreening</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 1-4 · PR 2-6</span>
+                <span class="pill trainer">Joham</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> Strategies and Best Practices</div>
+            <ul class="sub-items">
+              <li>Practice and Use of Simulators — Joham</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="day-group">
+        <div class="date-label">28-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Andrea">
+            <div class="card-top">
+              <div class="card-title">Case Review</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 1-4 · PR 2-6</span>
+                <span class="pill duracion">1 Día</span>
+                <span class="pill trainer">Andrea</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> Process Overview</div>
+            <ul class="sub-items">
+              <li>Responsibilities, Checklists, and Tools — Andrea</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="day-group">
+        <div class="date-label">29-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Andrea">
+            <div class="card-top">
+              <div class="card-title">Case Review</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 8-12 · PR 10-2</span>
+                <span class="pill trainer">Andrea</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> Strategies and Best Practices</div>
+            <ul class="sub-items">
+              <li>Practice and Use of Simulators — Andrea</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALL BACKS -->
+  <div class="category">
+    <div class="category-head"><h2>Call Backs</h2><span>11</span></div>
+    <div class="timeline">
+      <div class="day-group">
+        <div class="date-label">29-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Joham">
+            <div class="card-top">
+              <div class="card-title">Call Backs</div>
+              <div class="meta-row">
+                <span class="pill horario">CDMX 8-4 · PR 10-6</span>
+                <span class="pill duracion">1 DÍA</span>
+                <span class="pill trainer">Joham</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> Call Back Process overview</div>
+            <ul class="sub-items">
+              <li>Attorney's Role and Tools Used — Joham</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="day-group">
+        <div class="date-label">30-sept-26</div>
+        <div class="cards">
+          <div class="card trainer-Joham">
+            <div class="card-top">
+              <div class="card-title">Call Backs</div>
+              <div class="meta-row">
+                <span class="pill trainer">Joham</span>
+              </div>
+            </div>
+            <div class="tema"><b>Tema:</b> Legal and Communication Strategies</div>
+            <ul class="sub-items">
+              <li>Practice and Use of Simulators — Joham</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRACTICAL APPLICATION -->
+  <div class="category">
+    <div class="category-head"><h2>Practical Application &amp; Case Review</h2><span>12</span></div>
+    <div class="timeline">
+      <div class="day-group">
+        <div class="date-label">1 – 7 oct-26</div>
+        <div class="cards">
+          <div class="card">
+            <div class="card-top">
+              <div class="card-title">Mentorship &amp; Shadowing</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  <!-- /timelineView -->
+
+    <div id="calendarView" style="display:none;">
+    <div class="cal-month-block">
+      <div class="cal-month-title">Septiembre 2026</div>
+        <div class="cal-grid">
+          <div class="cal-head">Lun</div>
+          <div class="cal-head">Mar</div>
+          <div class="cal-head">Mié</div>
+          <div class="cal-head">Jue</div>
+          <div class="cal-head">Vie</div>
+          <div class="cal-head">Sáb</div>
+          <div class="cal-head">Dom</div>
+          <div class="cal-day empty"></div>
+          <div class="cal-day">
+            <div class="cal-daynum">1</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">2</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">3</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">4</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">5</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">6</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">7</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">8</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">9</div>
+            <div class="cal-event trainer-Andrea">Introduction</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">10</div>
+            <div class="cal-event trainer-Juanita">Inadmisibildades y elegibilidad</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">11</div>
+            <div class="cal-event trainer-Juanita">Elegibilidad</div>
+            <div class="cal-event trainer-Andrea">VAWA</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">12</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">13</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">14</div>
+            <div class="cal-event trainer-Andrea">VAWA Abuse Interviews</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">15</div>
+            <div class="cal-event trainer-Diego">VAWA Dcl</div>
+            <div class="cal-event trainer-Diego">T Visa Fundamentals</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">16</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">17</div>
+            <div class="cal-event trainer-Diego">T Visa Bible study: TVPA</div>
+            <div class="cal-event trainer-Brenda">T Visa Psych. Evaluations</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">18</div>
+            <div class="cal-event trainer-Diego">Visa T Dcl</div>
+            <div class="cal-event trainer-Juanita">FOIA</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">19</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">20</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">21</div>
+            <div class="cal-event trainer-Juanita">Criminal Grounds</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">22</div>
+            <div class="cal-event trainer-Juanita">Permanent Bar Application</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">23</div>
+            <div class="cal-event trainer-Juanita">Adjustment of Status</div>
+            <div class="cal-event trainer-Joham">Complex Case Mgmt RFE</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">24</div>
+            <div class="cal-event trainer-Joham">LSU</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">25</div>
+            <div class="cal-event trainer-Andrea">Pre case review</div>
+            <div class="cal-event trainer-Joham">Rescreening</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">26</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">27</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">28</div>
+            <div class="cal-event trainer-Andrea">Case Review</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">29</div>
+            <div class="cal-event trainer-Andrea">Case Review</div>
+            <div class="cal-event trainer-Joham">Call Backs</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">30</div>
+            <div class="cal-event trainer-Joham">Call Backs</div>
+          </div>
+          <div class="cal-day empty"></div>
+          <div class="cal-day empty"></div>
+          <div class="cal-day empty"></div>
+          <div class="cal-day empty"></div>
+        </div>
+    </div>
+
+    <div class="cal-month-block">
+      <div class="cal-month-title">Octubre 2026</div>
+        <div class="cal-grid">
+          <div class="cal-head">Lun</div>
+          <div class="cal-head">Mar</div>
+          <div class="cal-head">Mié</div>
+          <div class="cal-head">Jue</div>
+          <div class="cal-head">Vie</div>
+          <div class="cal-head">Sáb</div>
+          <div class="cal-head">Dom</div>
+          <div class="cal-day empty"></div>
+          <div class="cal-day empty"></div>
+          <div class="cal-day empty"></div>
+          <div class="cal-day">
+            <div class="cal-daynum">1</div>
+            <div class="cal-event">Mentorship & Shadowing</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">2</div>
+            <div class="cal-event">Mentorship & Shadowing</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">3</div>
+            <div class="cal-event">Mentorship & Shadowing</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">4</div>
+            <div class="cal-event">Mentorship & Shadowing</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">5</div>
+            <div class="cal-event">Mentorship & Shadowing</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">6</div>
+            <div class="cal-event">Mentorship & Shadowing</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">7</div>
+            <div class="cal-event">Mentorship & Shadowing</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">8</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">9</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">10</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">11</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">12</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">13</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">14</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">15</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">16</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">17</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">18</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">19</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">20</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">21</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">22</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">23</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">24</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">25</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">26</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">27</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">28</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">29</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">30</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-daynum">31</div>
+          </div>
+          <div class="cal-day empty"></div>
+        </div>
+    </div>
+  </div>
+
+
+  <div class="footer">
+    <div class="duration-total">Duración total del programa: <span>16 días</span></div>
+    <div class="note">TMLF ACADEMY · TRAINING DEPARTMENT · PUERTO RICO COHORT · SEPT–OCT 2026</div>
+  </div>
+
+</div>
+
+<script>
+function showView(view){
+  var timeline = document.getElementById('timelineView');
+  var cal = document.getElementById('calendarView');
+  var btnT = document.getElementById('btnTimeline');
+  var btnC = document.getElementById('btnCalendar');
+  if(view === 'calendar'){
+    timeline.style.display = 'none';
+    cal.style.display = 'block';
+    btnT.classList.remove('active');
+    btnC.classList.add('active');
+  } else {
+    timeline.style.display = 'block';
+    cal.style.display = 'none';
+    btnC.classList.remove('active');
+    btnT.classList.add('active');
+  }
+}
+</script>
+</body>
+</html>
